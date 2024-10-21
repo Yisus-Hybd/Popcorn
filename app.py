@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from models import db, Peliculas, Usuarios
+import time
 
 # Inicializa la aplicacion de Flask
 app = Flask(__name__)
@@ -101,16 +102,33 @@ def register():
 
 
 # Ruta para iniciar sesion
+# Variable para contar intentos fallidos de inicio de sesion
+intentos_fallidos = {}
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    global intentos_fallidos
     if request.method == 'POST':
         usuario = request.form['usuario']
         contraseña = request.form['contraseña']
         
+        # Obtener la IP del cliente para limitar los intentos de inicio de sesin
+        cliente_ip = request.remote_addr
+
+        # Verificar si el cliente ha superado el límite de intentos fallidos
+        if cliente_ip in intentos_fallidos and intentos_fallidos[cliente_ip]['intentos'] >= 5:
+            tiempo_restante = int(time.time() - intentos_fallidos[cliente_ip]['timestamp'])
+            if tiempo_restante < 30:
+                flash(f'Demasiados intentos fallidos. Intenta de nuevo en {30 - tiempo_restante} segundos.', 'error')
+                return render_template('login.html')
+
         # Buscar el usuario en la base de datos
         usuario_encontrado = Usuarios.query.filter_by(nombre_usuario=usuario).first()
 
         if usuario_encontrado and check_password_hash(usuario_encontrado.contraseña, contraseña):
+            # Limpiar intentos fallidos tras un inicio de sesion exitoso
+            intentos_fallidos.pop(cliente_ip, None)
+
             # Iniciar sesion y almacenar datos del usuario en la sesion
             session['usuario_id'] = usuario_encontrado.id
             session['tipo_usuario'] = usuario_encontrado.tipo_usuario
@@ -120,7 +138,17 @@ def login():
             else:
                 return redirect(url_for('home'))
         else:
-            return render_template('login.html', error="Usuario o contraseña incorrectos.")
+            # Manejar intentos fallidos
+            if cliente_ip not in intentos_fallidos:
+                intentos_fallidos[cliente_ip] = {'intentos': 1, 'timestamp': time.time()}
+            else:
+                intentos_fallidos[cliente_ip]['intentos'] += 1
+                if intentos_fallidos[cliente_ip]['intentos'] >= 5:
+                    intentos_fallidos[cliente_ip]['timestamp'] = time.time()
+
+            flash('Usuario o contraseña incorrectos.', 'error')
+            return render_template('login.html')
+
     return render_template('login.html')
 
 # Ruta para cerrar sesion

@@ -6,95 +6,63 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Iniciar Sesión</title>
     <style>
+        /* Asegura que el HTML y body ocupen toda la pantalla */
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         body {
-            background-image: url('{{ url_for('static', filename='background_image.jpg') }}');
+            background-image: url('{{ url_for('static', filename='background_image.jpg') }}');  
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
 
+        /* Contenedor del formulario de login */
         .login-container {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 10px;
-            width: 350px;
+            width: 300px;
+            margin: 100px auto;
             text-align: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .error-message {
+        /* Mensajes de error o éxito */
+        .success {
+            color: green;
+            background-color: #e0ffe0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .error {
             color: red;
             background-color: #ffe0e0;
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 10px;
         }
-
-        .countdown-message {
-            color: orange;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .register-link {
-            margin-top: 10px;
-        }
-
-        /* Estilos del boton de Omitir */
-        .skip-link {
-            margin-top: 15px;
-            display: inline-block;
-            color: blue;
-            cursor: pointer;
-            text-decoration: underline;
-        }
     </style>
-
-    <script>
-        {% if timeout %}
-            let countdown = 30;
-            let interval = setInterval(function() {
-                countdown--;
-                document.getElementById('countdown').innerText = countdown;
-                if (countdown <= 0) {
-                    clearInterval(interval);
-                    window.location.reload();
-                }
-            }, 1000);
-        {% endif %}
-    </script>
 </head>
 <body>
     <div class="login-container">
         <img src="{{ url_for('static', filename='popcorn_logo.png') }}" alt="Popcorn Logo">
         <h2>Iniciar sesión</h2>
 
-        <!-- Mostrar mensaje de error si las credenciales no son validas -->
-        {% if error %}
-            <div class="error-message">
-                {{ error }}
-            </div>
-        {% endif %}
+        <!-- Mostrar mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-        <!-- Mostrar mensaje de cuenta regresiva si el usuario ha alcanzado 5 intentos -->
-        {% if timeout %}
-            <div class="countdown-message">
-                Demasiados intentos fallidos. Intenta nuevamente en <span id="countdown">30</span> segundos.
-            </div>
-        {% endif %}
-
-        <!-- Formulario de inicio de sesion -->
         <form action="/login" method="POST">
             <label for="usuario">Usuario</label>
             <input type="text" id="usuario" name="usuario" required>
@@ -104,16 +72,7 @@
 
             <button type="submit" class="btn">Log in</button>
         </form>
-
-        <!-- Enlace a la pagina de registro -->
-        <p class="register-link">
-            ¿Nuevo usuario? <a href="{{ url_for('register') }}">Regístrate aquí</a>
-        </p>
-
-        <!-- Boton de Omitir para ir a Home sin iniciar sesion -->
-        <p class="skip-link">
-            <a href="{{ url_for('home', logged_in=False) }}">Omitir por ahora</a>
-        </p>
+        <p>¿Nuevo usuario? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
     </div>
 </body>
 </html>
