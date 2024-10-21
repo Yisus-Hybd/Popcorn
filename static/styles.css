@@ -1,0 +1,59 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Hace que ocupe toda la pantalla */
+    margin: 0; /* Elimina márgenes */
+}
+
+/* Estilos para los contenedores de login y registro */
+.login-container, .register-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 300px;
+    text-align: center;
+}
+
+/* Estilos de imagen (logo) */
+.login-container img, .register-container img {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+/* Estilos de los campos de formulario */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botones de acción (Log in y Registrarse) */
+button.btn {
+    background-color: #E50914;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button.btn:hover {
+    background-color: #d40812;
+}
+
+/* Estilo para enlaces */
+a {
+    color: #E50914;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

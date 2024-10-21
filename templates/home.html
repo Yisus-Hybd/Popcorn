@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Página de Inicio</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url('{{ url_for('static', filename='background2.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar a, .navbar img {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .search-box input {
+            border: none;
+            background: none;
+            color: white;
+            outline: none;
+        }
+
+        .movie-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 100px; /* Ajuste para espacio con la navbar */
+        }
+
+        .movie-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            width: 150px;
+            text-align: center;
+        }
+
+        .movie-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar fija en la parte superior -->
+    <div class="navbar">
+        <!-- Imagen del logo de Popcorn -->
+        <a href="#"><img src="{{ url_for('static', filename='popcorn_logo.png') }}" alt="Popcorn Logo" width="40"></a>
+        
+        <div class="search-box">
+            <input type="text" placeholder="Buscar">
+        </div>
+
+        <!-- Mostrar "Iniciar sesion" solo si no está autenticado -->
+        {% if not logged_in %}
+            <a href="{{ url_for('login') }}">Iniciar sesión</a>
+        {% else %}
+            <a href="#">Cuenta</a>
+        {% endif %}
+    </div>
+
+    <!----> Contenido de la ppgina principal -->
+    <div class="home-container">
+        <div class="movie-list">
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='sonic.jpg') }}" alt="Sonic">
+                <p>Sonic</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='joker.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='smile.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='spiderman.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='venom.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>        <div class="movie-list">
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='sonic.jpg') }}" alt="Sonic">
+                <p>Sonic</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='joker.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='smile.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='spiderman.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="movie-card">
+                <img src="{{ url_for('static', filename='venom.jpg') }}" alt="Joker">
+                <p>Joker</p>
+                <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
