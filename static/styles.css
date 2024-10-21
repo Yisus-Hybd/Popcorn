@@ -25,15 +25,18 @@ body {
 }
 
 /* Estilos de los campos de formulario */
-input[type="text"], input[type="password"] {
+input[type="text"], 
+input[type="email"], /* Agregue email para que tenga el mismo estilo */
+input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box; /* Asegura que padding y border esten incluidos en el ancho total */
 }
 
-/* Botones de acción (Log in y Registrarse) */
+/* Botones de acciio (Log in y Registrarse) */
 button.btn {
     background-color: #E50914;
     color: white;
@@ -56,4 +59,46 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+/* Estilo para los formularios */
+form {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+/* Estilo para los botones */
+button {
+    padding: 10px;
+    background-color: #E50914;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #d40812;
+}
+
+/* Estilo para la lista de películas */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;  /* Ajusta el ancho al 100% del contenedor */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }

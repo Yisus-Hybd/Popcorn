@@ -59,7 +59,7 @@
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
-            margin-top: 100px; /* Ajuste para espacio con la navbar */
+            margin-top: 100px;
         }
 
         .movie-card {
@@ -75,6 +75,28 @@
             width: 100%;
             border-radius: 10px;
         }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 24px;
+            color: gray;
+            margin: 0 5px;
+            transition: color 0.3s;
+        }
+
+        .star.selected {
+            color: gold;
+        }
+
+        .star:hover,
+        .star:hover ~ .star {
+            color: gold;
+        }
     </style>
 </head>
 <body>
@@ -87,69 +109,106 @@
             <input type="text" placeholder="Buscar">
         </div>
 
-        <!-- Mostrar "Iniciar sesion" solo si no está autenticado -->
-        {% if not logged_in %}
-            <a href="{{ url_for('login') }}">Iniciar sesión</a>
+        <!-- Mostrar "Cerrar sesión" solo si hay una sesión activa -->
+        {% if session.get('usuario_id') %}
+            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
         {% else %}
-            <a href="#">Cuenta</a>
+            <a href="{{ url_for('login') }}">Iniciar sesión</a>
         {% endif %}
     </div>
 
-    <!----> Contenido de la ppgina principal -->
+    <!-- Contenido de la página principal -->
     <div class="home-container">
         <div class="movie-list">
             <div class="movie-card">
-                <img src="{{ url_for('static', filename='sonic.jpg') }}" alt="Sonic">
+                <img src="{{ url_for('static', filename='sonic_poster.jpg') }}" alt="Sonic">
                 <p>Sonic</p>
-                <p>⭐⭐⭐⭐⭐</p>
+                
+                <!-- Estrellas de calificación -->
+                <div class="stars" data-movie="sonic">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
             </div>
             <div class="movie-card">
-                <img src="{{ url_for('static', filename='joker.jpg') }}" alt="Joker">
+                <img src="{{ url_for('static', filename='joker_poster.jpg') }}" alt="Joker">
                 <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
+
+                <!-- Estrellas de calificación -->
+                <div class="stars" data-movie="joker">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
             </div>
             <div class="movie-card">
-                <img src="{{ url_for('static', filename='smile.jpg') }}" alt="Joker">
-                <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
+                <img src="{{ url_for('static', filename='smile_poster.jpg') }}" alt="Smile 2">
+                <p>Smile 2</p>
+
+                <!-- Estrellas de calificación -->
+                <div class="stars" data-movie="smile">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
             </div>
             <div class="movie-card">
-                <img src="{{ url_for('static', filename='spiderman.jpg') }}" alt="Joker">
-                <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
+                <img src="{{ url_for('static', filename='spiderman_poster.jpg') }}" alt="Spiderman">
+                <p>Spiderman</p>
+
+                <!-- Estrellas de calificación -->
+                <div class="stars" data-movie="spiderman">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
             </div>
             <div class="movie-card">
-                <img src="{{ url_for('static', filename='venom.jpg') }}" alt="Joker">
-                <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
-            </div>        <div class="movie-list">
-            <div class="movie-card">
-                <img src="{{ url_for('static', filename='sonic.jpg') }}" alt="Sonic">
-                <p>Sonic</p>
-                <p>⭐⭐⭐⭐⭐</p>
+                <img src="{{ url_for('static', filename='venom_poster.jpg') }}" alt="Venom">
+                <p>Venom</p>
+
+                <!-- Estrellas de calificación -->
+                <div class="stars" data-movie="venom">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
             </div>
-            <div class="movie-card">
-                <img src="{{ url_for('static', filename='joker.jpg') }}" alt="Joker">
-                <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
-            </div>
-            <div class="movie-card">
-                <img src="{{ url_for('static', filename='smile.jpg') }}" alt="Joker">
-                <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
-            </div>
-            <div class="movie-card">
-                <img src="{{ url_for('static', filename='spiderman.jpg') }}" alt="Joker">
-                <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
-            </div>
-            <div class="movie-card">
-                <img src="{{ url_for('static', filename='venom.jpg') }}" alt="Joker">
-                <p>Joker</p>
-                <p>⭐⭐⭐⭐⭐</p>
-            </div>
-            
+            <!-- Agrega más películas aquí -->
         </div>
     </div>
+
+    <!-- JavaScript para manejar la interacción con las estrellas -->
+    <script>
+        document.querySelectorAll('.stars').forEach(starContainer => {
+            const stars = starContainer.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    const movie = starContainer.getAttribute('data-movie');
+
+                    // Actualiza la visualización de las estrellas
+                    stars.forEach(s => s.classList.remove('selected'));
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add('selected');
+                    }
+
+                    // Aquí puedes hacer una llamada AJAX o formulario para enviar la calificación
+                    console.log(`Calificación para ${movie}: ${value} estrellas`);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

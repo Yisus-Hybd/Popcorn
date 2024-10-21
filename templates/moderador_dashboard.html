@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Dashboard de Moderador</title>
+</head>
+<body>
+    <h1>Dashboard de Moderador</h1>
+
+    <h2>Agregar nueva película</h2>
+    <form action="/moderador_dashboard" method="POST" enctype="multipart/form-data">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" rows="4" cols="50" required></textarea>
+
+        <label for="fecha_publicacion">Fecha de publicación:</label>
+        <input type="date" id="fecha_publicacion" name="fecha_publicacion" required>
+
+        <label for="imagen_pelicula">Imagen de la película (miniatura):</label>
+        <input type="file" id="imagen_pelicula" name="imagen_pelicula" accept="image/*" required>
+
+        <button type="submit" class="btn">Agregar Película</button>
+    </form>
+
+    <h2>Películas Actuales</h2>
+    <ul>
+        {% for pelicula in peliculas %}
+        <li>
+            <img src="{{ url_for('static', filename='uploads/' + pelicula.imagen) }}" alt="Poster de {{ pelicula.titulo }}" style="width: 100px;">
+            <strong>{{ pelicula.titulo }}</strong> - {{ pelicula.fecha_publicacion }} 
+            <form action="/eliminar_pelicula" method="POST" style="display:inline;">
+                <input type="hidden" name="pelicula_id" value="{{ pelicula.id }}">
+                <button type="submit">Eliminar</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

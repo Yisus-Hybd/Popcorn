@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Registrarse</title>
     <style>
+        
+
         /* Asegura que el HTML y body ocupen toda la pantalla */
         html, body {
             height: 100%;
@@ -28,7 +30,7 @@
             padding: 20px;
             border-radius: 10px;
             width: 300px;
-            margin: 100px auto; /* Centra el formulario en la página */
+            margin: 100px auto; /* Centra el formulario en la pagina */
             text-align: center;
         }
 
@@ -49,12 +51,12 @@
         }
     </style>
 
-    <!-- JavaScript para redirigir al login después de 3 segundos -->
+    <!-- JavaScript para redirigir al login despues de 2 segundos -->
     <script>
         {% if success %}
             setTimeout(function() {
                 window.location.href = "{{ url_for('login') }}";
-            }, 2000);  // Redirige a /login en 2 segundos, esto solo para simular una AppWeb real, ya que como esta en local, es instantaneo y no me gusta siente
+            }, 2000);  
         {% endif %}
     </script>
 </head>
@@ -63,7 +65,7 @@
         <img src="{{ url_for('static', filename='popcorn_logo.png') }}" alt="Popcorn Logo">
         <h2>Nuevo usuario</h2>
 
-        <!-- Mostrar mensaje de éxito si el registro fue exitoso -->
+        <!-- Mostrar mensaje de exito si el registro fue exitoso -->
         {% if success %}
             <div class="success-message">
                 Registro exitoso! Serás redirigido al inicio de sesión en 3 segundos...
@@ -80,12 +82,16 @@
         <form action="/register" method="POST">
             <label for="usuario">Nuevo usuario</label>
             <input type="text" id="usuario" name="usuario" required>
-
+        
+            <label for="email">Correo electrónico</label> <!-- Agrega este campo -->
+            <input type="email" id="email" name="email" required> <!-- Campo de email -->
+        
             <label for="contraseña">Contraseña</label>
             <input type="password" id="contraseña" name="contraseña" required>
-
+        
             <button type="submit" class="btn">Registrarse</button>
         </form>
+        
     </div>
 </body>
 </html>
